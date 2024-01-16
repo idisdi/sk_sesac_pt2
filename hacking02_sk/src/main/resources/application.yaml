@@ -6,8 +6,8 @@ spring :
     suffix : .html
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url : jdbc:mysql://mydb.coysatc2jipz.ap-northeast-2.r ds.amazonaws.com:3306/myhacking
-    username: myhack
+    url : jdbc:mysql://localhost:3306/myacchis
+    username: root
     password: 1234
 mybatis :
   type-aliases-package : org.example.hacking02_sk.model
