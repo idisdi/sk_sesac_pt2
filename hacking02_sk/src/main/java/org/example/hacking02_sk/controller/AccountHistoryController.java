@@ -4,13 +4,16 @@ import org.example.hacking02_sk.mapper.AccountHistoryMapper;
 import org.example.hacking02_sk.mapper.AccountMapper;
 import org.example.hacking02_sk.model.Account;
 import org.example.hacking02_sk.model.AccountHistory;
+import org.example.hacking02_sk.model.FilterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +28,16 @@ public class AccountHistoryController {
     AccountMapper accountMapper;
 
     @RequestMapping("index")
-    String accountHistoryList(Model model, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date myaccdate,
-                              @RequestParam(required = false) String myaccmemo){
+    String accountHistoryList(Model model, @ModelAttribute FilterForm filterForm){
+        if (filterForm.getMyaccdate() != null && filterForm.getMyaccdate().toString().trim().isEmpty()) {
+            filterForm.setMyaccdate(null);
+        }
+
+
+
+        String myaccdate = filterForm.getMyaccdate();
+        String myaccmemo = filterForm.getMyaccmemo();
+
         List<Account> accountList = accountMapper.list();
         List<AccountHistory> accountHistoryList = accountHistoryMapper.list(myaccdate, myaccmemo);
 
