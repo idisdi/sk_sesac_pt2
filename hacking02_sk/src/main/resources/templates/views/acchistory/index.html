@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>거래 내역 조회</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>거래 내역 조회</h1>
+
+    <form th:action="@{/acchistory/index}" th:object="${filterForm}" method="get">
+        <label for="myaccdate">Date:</label>
+        <input type="date" id="myaccdate" name="myaccdate" th:value="${filterForm.myaccdate}">
+        <br>
+        <label for="myaccmemo">Memo:</label>
+        <input type="text" id="myaccmemo" name="myaccmemo" th:value="${filterForm.myaccmemo}">
+        <br>
+        <button type="submit">Apply Filter</button>
+    </form>
+
+    <table border="1">
+    <thead>
+    <tr>
+        <th>Transaction Number</th>
+        <th>Account</th>
+        <th>Date</th>
+        <th>Amount In</th>
+        <th>Amount Out</th>
+        <th>Balance</th>
+        <th>Action Name</th>
+        <th>Memo</th>
+    </tr>
+    </thead>
+    <tbody th:each="history : ${list}">
+    <tr>
+        <td th:text="${history.myacchistnum}"></td>
+        <td th:text="${history.myacc}"></td>
+        <td th:text="${#dates.format(history.myaccdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${history.myaccin}"></td>
+        <td th:text="${history.myaccout}"></td>
+        <td th:text="${history.myaccbalance}"></td>
+        <td th:text="${history.myaccioname}"></td>
+        <td th:text="${history.myaccmemo}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

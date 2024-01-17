@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC ".//mybatis.org/DTD Mapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.hacking02_sk.mapper.AccountHistoryMapper">
+    <select id="list" resultType="acchistory">
+        select * from myacchistory
+        <where>
+            <if test="myaccdate != null">
+                AND DATE_FORMAT(myaccdate, '%Y-%m-%d') = DATE_FORMAT(#{myaccdate}, '%Y-%m-%d')
+            </if>
+            <if test="myaccmemo != null and myaccmemo != ''">
+                AND myaccmemo LIKE CONCAT('%', #{myaccmemo}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
